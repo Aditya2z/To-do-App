@@ -6,7 +6,9 @@ let root = document.querySelector(".root");
 let todoList = [];
 let localStorageList = JSON.parse(localStorage.getItem("todoList"));
 
-todoList = localStorageList.filter(ele => ele !== null);
+if(Boolean(localStorageList) !== false) {
+    todoList = localStorageList.filter(ele => ele !== null);
+};
 
 if(Boolean(todoList) !== false) {
     createUI(todoList, root);
