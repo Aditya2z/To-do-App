@@ -1,0 +1,289 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Custom Styling Starts Here */
+
+/* My Resets */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+}
+
+/* General Styles */
+html {
+    font-size: 16px;
+}
+body {
+    font-family: 'Shantell Sans', cursive;
+    max-width: 1370px;
+    width: 100%;
+    line-height: 1.5;
+    background: url(./media/kelly-sikkema-MBr12sVO_P8-unsplash.jpg) no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+}
+button,
+input,
+select,
+textarea {
+    font-family: 'Shantell Sans', cursive;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+    padding: 0;
+    font-weight: 600;
+}
+img,
+audio,
+video {
+    width: 100%;
+}
+
+/* Variables */
+:root {
+    --primary:  #222831;
+    --secondary: #393E46;
+    --tertiary: #012729;
+    --quaternary:#EEB801;
+}
+
+/* Containers */
+.container-50{
+    max-width: 50%;
+    width: 100%;
+    margin: 1rem auto;
+    padding: 2rem;
+    background-color: var(--quaternary);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    box-shadow: 2px 2px 5px 0 rgba(0,0,0,.30),
+                -2px -2px 5px 0 rgba(0,0,0,.30);
+    background: url(./media/joanna-kosinska-1_CMoFsPfso-unsplash.jpg) no-repeat;
+    background-size: cover;
+
+}
+
+
+
+/* Headings */
+h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    margin: 1rem;
+}
+
+/* Buttons */
+.btn {
+    background: var(--primary);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: .5rem 2rem;
+    border-radius: .25rem;
+}
+
+/* Styling main */
+.inputField {
+    position: relative;
+}
+
+.inputField .todo-input {
+    width: 100%;
+    font-size: 1.25rem;
+    padding: .75rem 3rem;
+    border-radius: .25rem;
+    margin-bottom: 1rem;
+}
+
+
+
+.inputField .selectAll {
+    width: 1.25rem;
+    height: 1.25rem;
+    position: absolute ;
+    left: 1.20rem;
+    top: 25%;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: .85;
+    cursor: pointer;
+}
+
+input[type = checkbox] {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+li {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 0 1rem;
+    background-color: white;
+    margin-bottom: .25rem;
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+.close {
+    cursor: pointer;
+    color: tomato;
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+.btnPannel {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Media Query for medium screens */
+@media screen and (max-width: 1220px){
+    .container-50 {
+        max-width: 60%;
+        width: 100%;
+    }
+    .btnPannel {
+        flex-wrap: wrap;
+    }
+    .btn {
+        flex: 0 1 47%;
+        margin: .5rem;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .container-50 {
+        max-width: 70%;
+        width: 100%;
+    }
+    .btnPannel {
+        flex-wrap: wrap;
+    }
+    .btn {
+        flex: 0 1 47%;
+        margin: .5rem;
+    }
+}
+
+@media screen and (max-width: 900px){
+    .container-50 {
+        max-width: 75%;
+        width: 100%;
+    }
+    .btnPannel {
+        flex-wrap: wrap;
+    }
+    .btn {
+        flex: 0 1 47%;
+        margin: .5rem;
+    }
+}
+
+@media screen and (max-width: 796px){
+    .container-50 {
+        max-width: 80%;
+        width: 100%;
+    }
+    .btnPannel {
+        flex-wrap: wrap;
+    }
+    .btn {
+        flex: 0 1 80%;
+        margin: .5rem auto;
+    }
+}
+
+/* for small screns */
+
+@media screen and (max-width: 650px){
+    .container-50 {
+        max-width: 80%;
+        width: 100%;
+    }
+    .btnPannel {
+        flex-wrap: wrap;
+    }
+    .btn {
+        flex: 0 1 80%;
+        margin: .5rem auto;
+    }
+}
+
+@media screen and (max-width: 500px){
+    html {
+        font-size: 14px;
+    }
+    .container-50 {
+        margin: 5vh auto;
+        max-width: 95%;
+        width: 100%;
+        border-radius: .25rem;
+        height: 90vh;
+    }
+    .btnPannel {
+        flex-wrap: wrap;
+    }
+    .btn {
+        flex: 0 1 100%;
+        margin: .5rem auto;
+    }
+}
