@@ -13,6 +13,29 @@ if(Boolean(localStorageList) !== false) {
     todoList = [];
 };
 
+function updateDefaultSelectedBtn(btn = defaultSelectedBtn) {
+    all.classList.remove("selected"); 
+    active.classList.remove("selected"); 
+    completed.classList.remove("selected"); 
+
+    if(btn === all) {
+        all.classList.add("selected"); 
+    }
+    if(btn === active) {
+        active.classList.add("selected"); 
+    }
+    if(btn === completed) {
+        completed.classList.add("selected"); 
+    }
+}
+
+let active = document.querySelector(".active-btn");
+let completed = document.querySelector(".completed-btn");
+let all = document.querySelector(".all-btn");
+let clear = document.querySelector(".clear-btn");
+let defaultSelectedBtn = all;
+updateDefaultSelectedBtn();
+
 
 function handleInput(event) {
     if(event.keyCode === 13 && event.target.value !== "") {
@@ -105,41 +128,46 @@ function handleSelectAll() {
 let selectAll = document.querySelector(".selectAll");
 selectAll.addEventListener("click", handleSelectAll);
 
+
 function handleActive() {
     let arr = todoList.filter(ele => ele.isDone === false);
     createUI(arr, root);
+    defaultSelectedBtn = active;
+    updateDefaultSelectedBtn();
 }
 
-let active = document.querySelector(".active-btn");
 active.addEventListener("click", handleActive);
+
 
 function handleCompleted() {
     let arr = todoList.filter(ele => ele.isDone === true);
     createUI(arr, root);
+    defaultSelectedBtn = completed;
+    updateDefaultSelectedBtn();
 }
 
-let completed = document.querySelector(".completed-btn");
 completed.addEventListener("click", handleCompleted);
+
+
 
 function handleAll() {
     createUI(todoList, root);
+    defaultSelectedBtn = all;
+    updateDefaultSelectedBtn();
 }
 
-let all = document.querySelector(".all-btn");
 all.addEventListener("click", handleAll);
+
 
 function handleClear() {
     todoList.forEach((ele, index) => {
         if(ele.isDone === true) delete todoList[index];
 })
 createUI(todoList, root);
-
 localStorage.todoList = JSON.stringify(todoList);
 }
 
-let clear = document.querySelector(".clear-btn");
 clear.addEventListener("click", handleClear);
-
 
 };
 

@@ -195,6 +195,14 @@ p {
     justify-content: space-between;
 }
 
+.selected {
+    color: var(--primary);
+    background-color: white;
+}
+
+
+
+
 /* Media Query for medium screens */
 @media screen and (max-width: 1220px){
     .container-50 {
@@ -286,4 +294,18 @@ p {
         flex: 0 1 100%;
         margin: .5rem auto;
     }
+}
+
+/* Hovering Styles */
+.btn:hover {
+    color: var(--primary);
+    background-color: white;
+}
+.selected:hover {
+    color: white;
+    background-color: var(--tertiary);
+}
+.clear-btn:hover {
+    color: white;
+    background-color: tomato;
 }
