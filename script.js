@@ -8,13 +8,10 @@ let localStorageList = JSON.parse(localStorage.getItem("todoList"));
 
 if(Boolean(localStorageList) !== false) {
     todoList = localStorageList.filter(ele => ele !== null);
-};
-
-if(Boolean(todoList) !== false) {
     createUI(todoList, root);
 } else {
     todoList = [];
-}
+};
 
 
 function handleInput(event) {
