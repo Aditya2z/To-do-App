@@ -165,6 +165,19 @@ h1 {
     cursor: pointer;
 }
 
+.inputField .enterBtn {
+    position: absolute;
+    right: .5rem;
+    top: 15%;
+    background: var(--primary);
+    color: white;
+    padding: .25rem .5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: .25rem;
+    display: none;
+}
+
 input[type = checkbox] {
     width: 1.25rem;
     height: 1.25rem;
@@ -183,11 +196,13 @@ p {
     font-size: 1.5rem;
 }
 
-.close {
+.closeBtn {
     cursor: pointer;
     color: tomato;
     font-size: 1.5rem;
     font-weight: 900;
+    height: 100%;
+    width: 3%;
 }
 .btnPannel {
     margin-top: 1rem;
@@ -273,6 +288,9 @@ p {
     .btn {
         flex: 0 1 80%;
         margin: .5rem auto;
+    }
+    .inputField .enterBtn {
+        display: block;
     }
 }
 

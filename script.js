@@ -1,100 +1,52 @@
 function main() {
     
-
 let root = document.querySelector(".root");
-
 let todoList = [];
-let localStorageList = JSON.parse(localStorage.getItem("todoList"));
+let inputCounter = 0;
 
-if(Boolean(localStorageList) !== false) {
-    todoList = localStorageList.filter(ele => ele !== null);
-    createUI(todoList, root);
-} else {
-    todoList = [];
-};
-
-function updateDefaultSelectedBtn(btn = defaultSelectedBtn) {
-    all.classList.remove("selected"); 
-    active.classList.remove("selected"); 
-    completed.classList.remove("selected"); 
-
-    if(btn === all) {
-        all.classList.add("selected"); 
-    }
-    if(btn === active) {
-        active.classList.add("selected"); 
-    }
-    if(btn === completed) {
-        completed.classList.add("selected"); 
-    }
+if(Boolean(localStorage.todoList)) {
+       todoList = JSON.parse(localStorage.getItem("todoList"));
+       inputCounter = localStorage.inputCounter;
+       createUI(todoList, root);
 }
-
-let active = document.querySelector(".active-btn");
-let completed = document.querySelector(".completed-btn");
-let all = document.querySelector(".all-btn");
-let clear = document.querySelector(".clear-btn");
-let defaultSelectedBtn = all;
-updateDefaultSelectedBtn();
-
-
-function handleInput(event) {
-    if(event.keyCode === 13 && event.target.value !== "") {
-        let todo = {
-            name: event.target.value,
-            isDone: false,
-        };
-        todoList.push(todo);
-
-    event.target.value = "";
-
-    createUI(todoList, root);
-
-    localStorage.todoList = JSON.stringify(todoList);
-    }
-    
-};
-
-let inputValue = document.querySelector("input[type=text]");
-inputValue.addEventListener("keyup", handleInput);
 
 function handleToggle(event) {
     let id = event.target.dataset.id;
-    todoList[id].isDone = !todoList[id].isDone;
-    createUI(todoList, root);
-
+    let toggleElement = todoList.filter(todo => Number(todo.id) === Number(id));
+    toggleElement.map(todo => todo.isDone = !todo.isDone);
+    
+    createUIforSelectedBtn(); 
     localStorage.todoList = JSON.stringify(todoList);
 }
 
 function handleDelete(event) {
     let id = event.target.dataset.id;
-    todoList.splice(id, 1);
+    todoList = todoList.filter(todo => Number(todo.id) !== Number(id));
 
-    createUI(todoList, root);
-
+    createUIforSelectedBtn();
     localStorage.todoList = JSON.stringify(todoList);
 }
 
-
-function createUI(data = todoList, rootElm) {
+function createUI(data, rootElm) {
 
     rootElm.innerHTML = "";
 
-    data.forEach((todo, index) => {
+    data.forEach((todo) => {
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.checked = todo.isDone;
-        checkbox.setAttribute("data-id", index);
+        checkbox.setAttribute("data-id", todo.id);
     
         let text = document.createElement("p");
         text.innerText = todo.name;
     
-        let close = document.createElement("span");
-        close.classList.add("close");
-        close.innerText = "X";
-        close.setAttribute("data-id", index);
+        let closeBtn = document.createElement("span");
+        closeBtn.classList.add("closeBtn");
+        closeBtn.innerText = "X";
+        closeBtn.setAttribute("data-id", todo.id);
     
         let li = document.createElement("li");
-        li.append(checkbox, text, close);
+        li.append(checkbox, text, closeBtn);
 
         if(todo.isDone === true) {
             li.style.opacity = ".75";
@@ -104,12 +56,84 @@ function createUI(data = todoList, rootElm) {
         rootElm.append(li);
 
         checkbox.addEventListener("change", handleToggle);
-        close.addEventListener("click", handleDelete);   
+        closeBtn.addEventListener("click", handleDelete);
+       
     });
 
 };
 
 
+function handleInput(event) {
+    if( (event.keyCode === 13 && event.target.value !== "") ||
+        (event.target === enterBtn && event.target.value !== "")
+    ) {
+        let todo = {
+            name: event.target.value,
+            isDone: false,
+            id: inputCounter,
+        };
+        todoList.push(todo);
+        event.target.value = "";
+
+        createUI(todoList, root);
+        inputCounter++;
+
+        localStorage.todoList = JSON.stringify(todoList);
+        localStorage.inputCounter = inputCounter;
+    }
+    
+};
+
+let inputValue = document.querySelector("input[type=text]");
+inputValue.addEventListener("keyup", handleInput);
+let enterBtn = document.querySelector(".enterBtn");
+enterBtn.addEventListener("touchstart", handleInput);
+
+let active = document.querySelector(".active-btn");
+let completed = document.querySelector(".completed-btn");
+let all = document.querySelector(".all-btn");
+let clear = document.querySelector(".clear-btn");
+
+let defaultSelectedBtn = all;
+let defaultSelectedData = [];
+createUIforSelectedBtn();
+
+function createUIforSelectedBtn(btn = defaultSelectedBtn) {
+    all.classList.remove("selected"); 
+    active.classList.remove("selected"); 
+    completed.classList.remove("selected");
+
+
+    if(btn === all) {
+        all.classList.add("selected");
+        defaultSelectedData = todoList;
+    }
+    if(btn === active) {
+        active.classList.add("selected");
+        defaultSelectedData = todoList.filter(ele => ele.isDone === false);
+    }
+    if(btn === completed) {
+        completed.classList.add("selected");
+        defaultSelectedData = todoList.filter(ele => ele.isDone === true);
+    }
+
+    createUI(defaultSelectedData, root);
+}
+
+active.addEventListener("click", function(event) {
+    defaultSelectedBtn = event.target;
+    createUIforSelectedBtn();
+});
+
+completed.addEventListener("click", function(event) {
+    defaultSelectedBtn = event.target;
+    createUIforSelectedBtn();
+});
+
+all.addEventListener("click", function(event) {
+    defaultSelectedBtn = event.target;
+    createUIforSelectedBtn();
+});
 
 function handleSelectAll() {
     let arr = [];
@@ -119,9 +143,8 @@ function handleSelectAll() {
     } else {
         todoList.forEach(todo => todo.isDone = false);
     }
-
-    createUI(todoList, root);
-
+    defaultSelectedBtn = all;
+    createUIforSelectedBtn();
     localStorage.todoList = JSON.stringify(todoList);
 };
 
@@ -129,42 +152,11 @@ let selectAll = document.querySelector(".selectAll");
 selectAll.addEventListener("click", handleSelectAll);
 
 
-function handleActive() {
-    let arr = todoList.filter(ele => ele.isDone === false);
-    createUI(arr, root);
-    defaultSelectedBtn = active;
-    updateDefaultSelectedBtn();
-}
-
-active.addEventListener("click", handleActive);
-
-
-function handleCompleted() {
-    let arr = todoList.filter(ele => ele.isDone === true);
-    createUI(arr, root);
-    defaultSelectedBtn = completed;
-    updateDefaultSelectedBtn();
-}
-
-completed.addEventListener("click", handleCompleted);
-
-
-
-function handleAll() {
-    createUI(todoList, root);
-    defaultSelectedBtn = all;
-    updateDefaultSelectedBtn();
-}
-
-all.addEventListener("click", handleAll);
-
-
 function handleClear() {
-    todoList.forEach((ele, index) => {
-        if(ele.isDone === true) delete todoList[index];
-})
-createUI(todoList, root);
-localStorage.todoList = JSON.stringify(todoList);
+    defaultSelectedBtn = all;
+    todoList = todoList.filter(todo => todo.isDone === false);
+    createUIforSelectedBtn();
+    localStorage.todoList = JSON.stringify(todoList);
 }
 
 clear.addEventListener("click", handleClear);
@@ -172,3 +164,4 @@ clear.addEventListener("click", handleClear);
 };
 
 main();
+
