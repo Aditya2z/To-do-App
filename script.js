@@ -87,7 +87,7 @@ function handleInput(event) {
 let inputValue = document.querySelector("input[type=text]");
 inputValue.addEventListener("keyup", handleInput);
 let enterBtn = document.querySelector(".enterBtn");
-enterBtn.addEventListener("touchstart", handleInput);
+enterBtn.addEventListener("click", handleInput);
 
 let active = document.querySelector(".active-btn");
 let completed = document.querySelector(".completed-btn");
